@@ -96,9 +96,9 @@ class NavBar extends Widget
         parent::init();
         $this->clientOptions = false;
         if (empty($this->options['class'])) {
-            Html::addCssClass($this->options, ['navbar', 'navbar-light', 'bg-faded']);
+            Html::addCssClass($this->options, ['navbar', 'navbar-light', 'bg-light', 'navbar-expand-lg']);
         } else {
-            Html::addCssClass($this->options, ['widget' => 'navbar']);
+            Html::addCssClass($this->options, ['navbar', 'navbar-expand-lg']);
         }
         if (empty($this->options['role'])) {
             $this->options['role'] = 'navigation';
@@ -112,16 +112,14 @@ class NavBar extends Widget
             }
             echo Html::beginTag('div', $this->innerContainerOptions);
         }
-        echo Html::beginTag('div', ['class' => 'navbar-header']);
         if (!isset($this->containerOptions['id'])) {
             $this->containerOptions['id'] = "{$this->options['id']}-collapse";
         }
-        echo $this->renderToggleButton();
         if ($this->brandLabel !== false) {
             Html::addCssClass($this->brandOptions, ['widget' => 'navbar-brand']);
             echo Html::a($this->brandLabel, $this->brandUrl === false ? Yii::$app->homeUrl : $this->brandUrl, $this->brandOptions);
         }
-        echo Html::endTag('div');
+        echo $this->renderToggleButton();
         Html::addCssClass($this->containerOptions, ['collapse' => 'collapse', 'widget' => 'navbar-toggleable-xs']);
         $options = $this->containerOptions;
         $tag = ArrayHelper::remove($options, 'tag', 'div');
@@ -149,12 +147,11 @@ class NavBar extends Widget
      */
     protected function renderToggleButton()
     {
-        $screenReader = "<span class=\"sr-only\">{$this->screenReaderToggleText}</span>";
-
-        return Html::button("{$screenReader}\n&#9776;", [
-            'class' => 'navbar-toggler hidden-sm-up',
-            'data-toggle' => 'collapse',
-            'data-target' => "#{$this->containerOptions['id']}",
+        return Html::button(Html::tag('span', null, ['class' => 'navbar-toggler-icon']), [
+            'class'         =>  'navbar-toggler',
+            'data-toggle'   =>  'collapse',
+            'data-target'   =>  "#{$this->containerOptions['id']}",
+            'aria-controls' =>  $this->containerOptions['id']
         ]);
     }
 }

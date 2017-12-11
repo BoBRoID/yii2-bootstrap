@@ -107,9 +107,9 @@ class Nav extends Widget
     public $dropDownCaret;
     /**
      * @var string name of a class to use for rendering dropdowns withing this widget. Defaults to [[Dropdown]].
-	 * @since 2.0.7
+     * @since 2.0.7
      */
-	public $dropdownClass = 'yii\bootstrap\Dropdown';
+    public $dropdownClass = 'yii\bootstrap\Dropdown';
 
 
     /**
@@ -127,11 +127,17 @@ class Nav extends Widget
         if ($this->dropDownCaret === null) {
             $this->dropDownCaret = '<span class="caret"></span>';
         }
-        Html::addCssClass($this->options, ['widget' => 'nav']);
+        Html::addCssClass($this->options, ['widget' => 'navbar-nav']);
+
+        if(array_key_exists('class', $this->options) === false){
+            Html::addCssClass($this->options, ['mr-auto']);
+        }
     }
 
     /**
      * Renders the widget.
+     * @throws \Exception
+     * @throws InvalidConfigException
      */
     public function run()
     {
@@ -141,6 +147,8 @@ class Nav extends Widget
 
     /**
      * Renders widget items.
+     * @throws \Exception
+     * @throws InvalidConfigException
      */
     public function renderItems()
     {
@@ -160,6 +168,7 @@ class Nav extends Widget
      * @param string|array $item the item to render.
      * @return string the rendering result.
      * @throws InvalidConfigException
+     * @throws \Exception
      */
     public function renderItem($item)
     {
@@ -197,11 +206,15 @@ class Nav extends Widget
         Html::addCssClass($options, 'nav-item');
         Html::addCssClass($linkOptions, 'nav-link');
 
+        $content = Html::a($label, $url, $linkOptions);
+
         if ($this->activateItems && $active) {
-            Html::addCssClass($linkOptions, 'active');
+            Html::addCssClass($options, 'active');
+
+            $content .= Html::tag('span', '(current)', ['class' => 'sr-only']);
         }
 
-        return Html::tag('li', Html::a($label, $url, $linkOptions) . $items, $options);
+        return Html::tag('li', $content . $items, $options);
     }
 
     /**
@@ -211,12 +224,13 @@ class Nav extends Widget
      * @param array $parentItem the parent item information. Please refer to [[items]] for the structure of this array.
      * @return string the rendering result.
      * @since 2.0.1
+     * @throws \Exception
      */
     protected function renderDropdown($items, $parentItem)
     {
-		/** @var Widget $dropdownClass */
-		$dropdownClass = $this->dropdownClass;
-		return $dropdownClass::widget([
+        /** @var Widget $dropdownClass */
+        $dropdownClass = $this->dropdownClass;
+        return $dropdownClass::widget([
             'options' => ArrayHelper::getValue($parentItem, 'dropDownOptions', []),
             'items' => $items,
             'encodeLabels' => $this->encodeLabels,
