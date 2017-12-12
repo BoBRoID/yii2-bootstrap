@@ -120,7 +120,7 @@ class NavBar extends Widget
             echo Html::a($this->brandLabel, $this->brandUrl === false ? Yii::$app->homeUrl : $this->brandUrl, $this->brandOptions);
         }
         echo $this->renderToggleButton();
-        Html::addCssClass($this->containerOptions, ['collapse' => 'collapse', 'widget' => 'navbar-toggleable-xs']);
+        Html::addCssClass($this->containerOptions, ['collapse' => 'collapse', 'widget' => 'navbar-collapse']);
         $options = $this->containerOptions;
         $tag = ArrayHelper::remove($options, 'tag', 'div');
         echo Html::beginTag($tag, $options);
