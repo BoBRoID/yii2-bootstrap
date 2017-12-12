@@ -376,7 +376,7 @@ class ActiveField extends \yii\widgets\ActiveField
             }
             $config['horizontalCssClasses'] = $cssClasses;
             $config['wrapperOptions'] = ['class' => $cssClasses['wrapper']];
-            $config['labelOptions'] = ['class' => 'form-control-label ' . $cssClasses['label']];
+            $config['labelOptions'] = ['class' => $cssClasses['label']];
             $config['errorOptions'] = ['class' => 'text-danger ' . $cssClasses['error']];
             $config['hintOptions'] = ['class' => 'text-muted ' . $cssClasses['hint']];
             $config['options'] = ['class' => 'form-group row'];
