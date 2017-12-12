@@ -144,6 +144,11 @@ class ActiveField extends \yii\widgets\ActiveField
      */
     public $enableLabel = true;
 
+    /**
+     * @var array
+     */
+    public $errorOptions = ['class' => 'invalid-feedback'];
+
 
     /**
      * @inheritdoc
@@ -348,12 +353,12 @@ class ActiveField extends \yii\widgets\ActiveField
     {
         $config = [
             'hintOptions' => [
-                'tag' => 'p',
+                'tag' => 'div',
                 'class' => 'text-muted',
             ],
             'errorOptions' => [
-                'tag' => 'p',
-                'class' => 'text-danger',
+                'tag' => 'div',
+                'class' => 'invalid-feedback',
             ],
             'inputOptions' => [
                 'class' => 'form-control',

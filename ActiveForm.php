@@ -84,7 +84,7 @@ class ActiveForm extends \yii\widgets\ActiveForm
     /**
      * @var string the CSS class that is added to a field container when the associated attribute has validation error.
      */
-    public $errorCssClass = 'has-danger';
+    public $errorCssClass = 'invalid-feedback';
 
 
     /**
@@ -99,6 +99,11 @@ class ActiveForm extends \yii\widgets\ActiveForm
         if ($this->layout === 'inline') {
             Html::addCssClass($this->options, 'form-inline');
         }
+
+        $this->options['novalidate'] = '';
+
+        BootstrapActiveFormAsset::register($this->getView());
+
         parent::init();
     }
 
