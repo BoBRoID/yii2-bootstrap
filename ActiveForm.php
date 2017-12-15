@@ -9,6 +9,8 @@ namespace yii\bootstrap;
 
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\helpers\Json;
+use yii\widgets\ActiveFormAsset;
 
 /**
  * A Bootstrap 4 enhanced version of [[\yii\widgets\ActiveForm]].
@@ -102,9 +104,17 @@ class ActiveForm extends \yii\widgets\ActiveForm
 
         $this->options['novalidate'] = '';
 
-        BootstrapActiveFormAsset::register($this->getView());
-
         parent::init();
+    }
+
+    public function registerClientScript()
+    {
+        $id = $this->options['id'];
+        $options = Json::htmlEncode($this->getClientOptions());
+        $attributes = Json::htmlEncode($this->attributes);
+        $view = $this->getView();
+        BootstrapActiveFormAsset::register($view);
+        $view->registerJs("jQuery('#$id').yiiBActiveForm($attributes, $options);");
     }
 
     /**
