@@ -788,10 +788,12 @@
     };
 
     var updateAriaInvalid = function ($form, attribute, hasError) {
+        var error = hasError ? 'Error' : '';
+
         if (attribute.updateAriaInvalid) {
             $form.find(attribute.input).attr('aria-invalid', hasError ? 'true' : 'false');
         }
 
-        $form.find(attribute.input)[0].setCustomValidity("sdsdfgsdf");
+        $form.find(attribute.input)[0].setCustomValidity(error);
     }
 })(window.jQuery);
